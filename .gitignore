@@ -4,3 +4,4 @@ composer.lock
 /app/vendor
 /app/storage/logs
 /app/storage/google-docs
+/app/storage/db
