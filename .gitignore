@@ -5,3 +5,4 @@ composer.lock
 /app/storage/logs
 /app/storage/google-docs
 /app/storage/db
+/app/storage/report

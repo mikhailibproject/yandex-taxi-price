@@ -1,11 +1,21 @@
 {
+    "config": {
+	    "platform": {
+            "php": "7.4"
+        }
+    },
     "require": {
+        "php": "^7.3,<8.0",
         "google/apiclient": "^2.0",
         "vlucas/phpdotenv": "^5.2",
         "monolog/monolog": "^2.1",
         "symfony/console": "^5.1",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "psr/cache": "1.0.*",
+        "psr/log": "1.1.*",
+        "ext-pdo": "*",
+        "symfony/serializer": "^5.3"
     },
     "autoload": {
         "psr-4":{

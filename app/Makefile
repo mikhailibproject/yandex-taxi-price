@@ -16,3 +16,9 @@ to-work: ## Получить данные из Яндекс.Такси "дом -
 
 to-home: ## Получить данные из Яндекс.Такси "работа -> дом"
 	php cli yandextaxi:get-data --direction=to_home
+
+init-sql: ## Создать или очистить таблицы SQLite
+	php cli yandextaxi:init
+
+report: ## Создать или очистить таблицы SQLite
+	php cli yandextaxi:report -o test.csv
