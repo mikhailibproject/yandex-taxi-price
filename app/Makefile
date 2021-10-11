@@ -11,11 +11,8 @@ run-tests: ## Запуск тестов
 	./vendor/bin/phpunit --colors --testdox ./tests/
 
 #
-to-work: ## Получить данные из Яндекс.Такси "дом -> работа"
-	php cli yandextaxi:get-data --direction=to_work
-
-to-home: ## Получить данные из Яндекс.Такси "работа -> дом"
-	php cli yandextaxi:get-data --direction=to_home
+get-data: ## Получить данные из Яндекс.Такси "дом -> работа"
+	php cli yandextaxi:get-data
 
 init-sql: ## Создать или очистить таблицы SQLite
 	php cli yandextaxi:init

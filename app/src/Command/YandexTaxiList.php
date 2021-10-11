@@ -10,7 +10,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use function env;
@@ -24,17 +23,9 @@ class YandexTaxiList extends Command
         $this
             ->setDescription('Получает данные из Яндекс.Такси')
             ->setHelp(
-                'Используется для получения текущей стоимости поездки по выбранному направлению'
+                'Используется для получения текущей стоимости поездки по списку направлений'
             );
 
-        $this
-            ->addOption(
-                'direction',
-                'd',
-                InputOption::VALUE_REQUIRED,
-                'Направление поездки',
-                'to_work'
-            );
     }
 //
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,7 +34,7 @@ class YandexTaxiList extends Command
         $log->pushHandler(new StreamHandler(__DIR__ . '/../../storage/logs/logger.log', Logger::DEBUG));
 
         $io = new SymfonyStyle($input, $output);
-        $direction = $input->getOption('direction');
+        //$direction = $input->getOption('direction');
 
         $io->title($this->getDescription());
         $io->text($this->getHelp());
