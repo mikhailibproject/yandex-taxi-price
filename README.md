@@ -1,6 +1,6 @@
-Парсит цены ЯндексТакси по указанному маршруту и экспортирует их в Googlesheets документ.
-
-[Вариант без docker здесь - в ветке main](https://github.com/skodnik/yandex.taxi-pub/tree/main)
+Запрашивает цены ЯндексТакси из списка маршрутов прописанных в Google Sheets документе.
+Запрашивает текущую погоду из сервиса Yandex.Погода
+Текущие результаты записывает в 
 
 # Вариант с Docker
 Установка docker: [get-docker](https://docs.docker.com/get-docker/)
@@ -30,8 +30,8 @@ $ make start
 В контейнере:
 ```
 # crontab -e
-*/5 6-12 * * * php {{PATH_TO_SCRIPT}}/cli yandextaxi:get-data --direction=to_work --quiet >/dev/null 2>&1
-*/5 17-21 * * * php {{PATH_TO_SCRIPT}}/cli yandextaxi:get-data --direction=to_home --quiet >/dev/null 2>&1
+*/5 6-12 * * * php {{PATH_TO_SCRIPT}}/cli yandextaxi:get-data --quiet >/dev/null 2>&1
+
 ```
 
 ## Запуск из консоли:
@@ -42,7 +42,8 @@ $ make console c="app-php"
 В контейнере:
 ```
 # make help
-# make to-work
+# make init-sql 
+# make get-data
 # make to-home
 ```
 

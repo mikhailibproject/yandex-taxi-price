@@ -7,6 +7,7 @@ use App\SQLite\SQLiteTables;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -18,9 +19,9 @@ class YandexTaxiInit extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Создает или очищает базу данных о ценах YandexTaxi')
+            ->setDescription('Create or clear SQLite Database')
             ->setHelp(
-                'Help...'
+                'SQLite DB created with name from parameter "PATH_TO_SQLITE_DB"'
             );
     }
 //
@@ -30,16 +31,19 @@ class YandexTaxiInit extends Command
         $log->pushHandler(new StreamHandler(__DIR__ . '/../../storage/logs/logger.log', Logger::DEBUG));
 
         $io = new SymfonyStyle($input, $output);
-
+        $table = new Table($output);
         $io->title($this->getDescription());
-        $io->text($this->getHelp());
-        $io->newLine();
+        // $io->text($this->getHelp());
+        // $io->newLine();
         $sql = new SQLiteConnection();
         $pdo = $sql->connect();
         $tables = new SQLiteTables($pdo);
         $tables->dropTables();
         $tables->createTables();
-        print_r($tables->getTableList());
+        $table ->setHeaders(['Created Tables']);
+        foreach ($tables->getTableList() as $tn) $table->addRow([$tn]);
+        $table->setStyle('borderless');
+        $table->render();
         return Command::SUCCESS;
     }
 }

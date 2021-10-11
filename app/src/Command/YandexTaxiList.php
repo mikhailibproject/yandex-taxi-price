@@ -21,9 +21,10 @@ class YandexTaxiList extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Получает данные из Яндекс.Такси')
+            ->setDescription('Request price and weather data from Yandex.Taxi and Yandex.Weather')
             ->setHelp(
-                'Используется для получения текущей стоимости поездки по списку направлений'
+                'Help...
+ Help...'
             );
 
     }
@@ -31,14 +32,15 @@ class YandexTaxiList extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $log = new Logger('cli');
+        // ToDo set file name as Parameter %)
         $log->pushHandler(new StreamHandler(__DIR__ . '/../../storage/logs/logger.log', Logger::DEBUG));
 
         $io = new SymfonyStyle($input, $output);
         //$direction = $input->getOption('direction');
 
         $io->title($this->getDescription());
-        $io->text($this->getHelp());
-        $io->newLine();
+        //$io->text($this->getHelp());
+        //$io->newLine();
 
         $sql = new SQLiteConnection();
         $pdo = $sql->connect();
@@ -58,11 +60,14 @@ class YandexTaxiList extends Command
                 'lat' => env('WEATHER_COORDINATE_LATITUDE')
             ]
         ));
+        $io->text("Loading route data from Google Sheet...");
         if ($yandex_taxi->loadFromGoogleSheet())
         {
+            $io->text("The current weather and taxi prices is requested from Yandex services...");
             if ($yandex_taxi->requestTaxiPrice() and $yandex_taxi->requestWeather())
             {
                 //var_dump($yandex_taxi->getWeatherData()->getResultArray());
+                $io->text("Saving data...");
                 $yandex_taxi->writeResultToDB($pdo);
                 $yandex_taxi->saveToGoogleSheet();
                 $yandex_taxi->writeResultToGoogleSheet([
@@ -81,6 +86,7 @@ class YandexTaxiList extends Command
         } else {
             return Command::FAILURE;
         }
+        $io->text("Done...");
         return Command::SUCCESS;
     }
 }

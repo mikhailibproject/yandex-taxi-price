@@ -171,14 +171,14 @@ class TaxiRouteList
             $values = $route->getPriceData();
             $route_id = $route_db->isRouteExist((int)$values['id']);
             if ($route_id) {
-                if ($route_db->updateRoute($values))
-                    print_r('Update route ' . $route_id . " - " . "\n");
+                $route_db->updateRoute($values);
+                //print_r('Update route ' . $route_id . " - " . "\n");
             } else {
                 $route_id = $route_db->insertRoute($values);
-                print_r('Insert route ' . $route_id . "\n");
+                //print_r('Insert route ' . $route_id . "\n");
             }
             if ($weather_id) {
-                print_r('Weather id ' . $weather_id . "\n");
+                //print_r('Weather id ' . $weather_id . "\n");
 
                 $req_id = $route_db->insertReqPrice($route_id, $values, $weather_id);
                 if ($req_id) {
@@ -228,7 +228,7 @@ class TaxiRouteList
     {
         if (!empty($this->weather_data))
         {
-            print_r("requesting Weather... \n");
+            //print_r("requesting Weather... \n");
             $this->weather_data->requestData();
             //print_r($this->weather_data->getErrorMessage());
 

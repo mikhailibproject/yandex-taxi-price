@@ -19,16 +19,16 @@ class YandexTaxiReport extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Отчет о ценах YandexTaxi')
+            ->setDescription('Yandex.Taxi and Yandex.Weather requested data report')
             ->setHelp(
-                'Help...'
+                'Options: -o, --output   CSV filename to saving reported data'
             );
         $this
             ->addOption(
                 'output',
                 'o',
                 InputOption::VALUE_REQUIRED,
-                'имя файла для выгрузки отчета. По умолчанию на экран',
+                'CSV file name. Default - STDOUT',
                 'stdout'
             );
     }
@@ -42,33 +42,36 @@ class YandexTaxiReport extends Command
         $outfile = $input->getOption('output');
 
         $io->title($this->getDescription());
-        $io->text($this->getHelp());
-        $io->newLine();
-        $io->text($outfile);
+        // $io->text($this->getHelp());
         $io->newLine();
 
-
-        $of = fopen($outfile, "w") or die("Unable to open file!");
+        $of = fopen($outfile, "w") or die("Unable to create file!");
 
         $sql = new SQLiteConnection();
         $pdo = $sql->connect();
         $report = new SQLiteRouteReport($pdo);
         $report->getAllData();
-
+        $r_count = 0;
+        $io->text("Start writing data to the file:" . $outfile);
         if ($row = $report->fetch()) {
-            $io->text(implode("|",array_keys($row)));
+            // $io->text(implode("|",array_keys($row)));
             fputcsv($of, array_keys($row));
-            $io->text(implode("|",$row));
+            // $io->text(implode("|",$row));
             fputcsv($of, $row);
+            $r_count++;
         }
 
         while ($row = $report->fetch())
         {
-            $io->text(implode("|",$row));
+            // $io->text(implode("|",$row));
             fputcsv($of, $row);
+            $r_count++;
             //$io->newLine();
         }
         fclose($of);
+        $io->text("Total written " .$r_count . " line(s)");
+        $io->newLine();
+
 
         return Command::SUCCESS;
     }
