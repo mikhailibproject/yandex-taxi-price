@@ -63,7 +63,7 @@ class YandexTaxiList extends Command
         $io->text("Loading route data from Google Sheet...");
         if ($yandex_taxi->loadFromGoogleSheet())
         {
-            $io->text("The current weather and taxi prices is requested from Yandex services...");
+            $io->text("Requesting the current Weather info and Taxi prices from Yandex services...");
             if ($yandex_taxi->requestTaxiPrice() and $yandex_taxi->requestWeather())
             {
                 //var_dump($yandex_taxi->getWeatherData()->getResultArray());

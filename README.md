@@ -1,101 +1,109 @@
-Запрашивает цены ЯндексТакси из списка маршрутов прописанных в Google Sheets документе.
-Запрашивает текущую погоду из сервиса Yandex.Погода
-Текущие результаты записывает в 
 
-# Вариант с Docker
-Установка docker: [get-docker](https://docs.docker.com/get-docker/)
 
-## Установка
+# Docker
+Docker install: [get-docker](https://docs.docker.com/get-docker/)
+
+## Installation
 ```
 $ git clone https://github.com/skodnik/yandex.taxi-pub
 $ cd yandex.taxi-pub
 $ make start
-```
-
-## Настройка приложения в app/.env
-> ВАЖНО! именно app/.env, а не .env
-
-В текущей версии реализована возможность указания двух POI (например - долгота: 30.273645264, широта: 59.799730961):
-- home - COORDINATE_LONGITUDE_1, COORDINATE_LATITUDE_1
-- work - COORDINATE_LONGITUDE_2, COORDINATE_LATITUDE_2
-
-Для сохранения данных в Google Spreadsheets необходимо указать:
-- GOOGLE_SPREADSHEET_PUSH значение true (по умолчанию - false)
-- GOOGLE_SPREADSHEET_ID (является частью ссылки на додкумент)
-- наименования листов с указанием диапазонов ячеек для заполнения GOOGLE_SPREADSHEET_ID_TO_WORK_RANGE, GOOGLE_SPREADSHEET_ID_TO_HOME_RANGE (например - "Home_to_Work!A2")
-
-Загрузка данных в Google Spreadsheets невозможна без получения `credentials.json` и размещения его в директории `storage/google-docs`. Для его получения необходимо включить Google Sheets API и создать приложение. Подробнее здесь - [developers.google.com/sheets/api/quickstart/](https://developers.google.com/sheets/api/quickstart/php#step_3_set_up_the_sample)
-
-## Запуск по расписанию:
-В контейнере:
-```
-# crontab -e
-*/5 6-12 * * * php {{PATH_TO_SCRIPT}}/cli yandextaxi:get-data --quiet >/dev/null 2>&1
 
 ```
 
-## Запуск из консоли:
-На хосте:
+## Set up parameters app/.env
+> IMPORTANT! exactly "app/.env", not ".env"
+
 ```
-$ make console c="app-php"
+# Yandex.Taxi price service URL
+YANDEX_TAXI_URI_API="https://taxi-routeinfo.taxi.yandex.net/taxi_info"
+# Client ID API Key. The ID and Key must be requested from the Yandex support service 
+YANDEX_CLIENT_ID="xxxxxxxx"
+YANDEX_API_KEY="Some-String"
+# Yandex.Weather service URL
+YANDEX_WEATHER_URI_API="https://api.weather.yandex.ru/v2/forecast"
+# API Key fom Yandex developer account 
+YANDEX_WEATHER_API_KEY="xxx-xxx-xxx"
+# Coordinate for request Weather forecast
+WEATHER_COORDINATE_LONGITUDE=37.380804
+WEATHER_COORDINATE_LATITUDE=55.811216
+# Defaulyt path to SQLite database
+PATH_TO_SQLITE_DB="storage/db/route_price.sqlite"
+# Google Spreadsheets 
+GOOGLE_APP_CREDENTIALS="credentials.json"
+# Google Sppreadsheet identificator 
+# https://docs.google.com/spreadsheets/d/_____this is an identifier______/edit#gid=0
+GOOGLE_SPREADSHEET_ID="_____this is an identifier______"
+# Range for reading route info 
+# First line must contain HEADER
+# Subsequent lines are data
+# id	name	description	            from_lat	from_long	to_lat	    to_long	    request_count	error_message
+# 1	    Route1	Route from home to work	55.8111280	37.3806690	55.7535640	37.5982050	863	
+GOOGLE_SPREADSHEET_ROUTE_RANGE="Routes!A:I"
+# 
+GOOGLE_SPREADSHEET_RESULT_RANGE="Current_price!A1"
 ```
-В контейнере:
+
+Loading data into Google Spreadsheets is impossible without obtaining
+'credentials.json' and placing it in the 'storage/google-docs' directory.
+To get it, you need to enable the Google Sheets API and create an application.
+More details here - [developers.google.com/sheets/api/quickstart/ ](https://developers.google.com/sheets/api/quickstart/php#step_3_set_up_the_sample)
+
+At the beginning it is necessary to create a database
+> make init-sql
+## Running from the console:
+
+in container:
 ```
-# make help
+Get help
+# make help 
+
+Create or clear SQlite DB
 # make init-sql 
+Request data from Yandex
 # make get-data
-# make to-home
+Save report data
+# make report
 ```
 
-## Пример результата работы
+## Example
 ```
-# make to-home
-php cli yandextaxi:get-data --direction=to_home
+# make get-data
+php cli yandextaxi:get-data
 
-Получает данные из Яндекс.Такси
-===============================
+Request price and weather data from Yandex.Taxi and Yandex.Weather
+==================================================================
 
-Используется для получения актуальной стоимости поездки по выбранному направлению, по умолчанию - "дом -> работа"
+ Loading route data from Google Sheet...
+ Requesting the current weather and taxi prices from Yandex services...
+ Saving data...
+ Done...
 
------------------ ------------
-Параметр          Значение
------------------ ------------
-date              01.11.2020
-time              16:24:46
-duration          27
-distance          21
-econom            500
-business          670
-comfortplus       830
-vip               1160
-ultimate          2290
-maybach           2520
-child_tariff      590
-minivan           850
-premium_van       1910
-personal_driver   2020
-express           520
-courier           370
-cargo             860
------------------ ------------
 ```
 
-## Тесты:
-В контейнере:
+
+## Scheduled launch:
+in container:
 ```
-# make run-tests
+Add line to /etc/crontab
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+
+*/5  *  *  *  *   root    cd /var/app && php /var/app/cli yandextaxi:get-data
 ```
 
-## Команды Composer:
-На хосте (пример):
+
+
+
+## Composer Commands:
+
 ```
 $ make composer c="update"
 $ make composer c="dump-autoload"
-```
-
-## Остановка и очистка
-На хосте:
-```
-$ make down
-# rm -rf app/vendor app/composer.lock app/.phpunit.result.cache
 ```
