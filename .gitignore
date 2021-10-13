@@ -1,6 +1,7 @@
 *.log
 .phpunit*
 composer.lock
+/.idea
 /app/vendor
 /app/storage/logs
 /app/storage/google-docs

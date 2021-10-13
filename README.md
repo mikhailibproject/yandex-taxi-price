@@ -1,5 +1,3 @@
-
-
 # Docker
 Docker install: [get-docker](https://docs.docker.com/get-docker/)
 
@@ -36,11 +34,11 @@ GOOGLE_APP_CREDENTIALS="credentials.json"
 GOOGLE_SPREADSHEET_ID="_____this is an identifier______"
 # Range for reading route info 
 # First line must contain HEADER
-# Subsequent lines are data
 # id	name	description	            from_lat	from_long	to_lat	    to_long	    request_count	error_message
+# Subsequent lines are data
 # 1	    Route1	Route from home to work	55.8111280	37.3806690	55.7535640	37.5982050	863	
 GOOGLE_SPREADSHEET_ROUTE_RANGE="Routes!A:I"
-# 
+# Last results data
 GOOGLE_SPREADSHEET_RESULT_RANGE="Current_price!A1"
 ```
 
@@ -65,7 +63,6 @@ Request data from Yandex
 Save report data
 # make report
 ```
-
 ## Example
 ```
 # make get-data
@@ -80,8 +77,6 @@ Request price and weather data from Yandex.Taxi and Yandex.Weather
  Done...
 
 ```
-
-
 ## Scheduled launch:
 in container:
 ```
@@ -97,13 +92,10 @@ Add line to /etc/crontab
 
 */5  *  *  *  *   root    cd /var/app && php /var/app/cli yandextaxi:get-data
 ```
-
-
-
-
 ## Composer Commands:
-
 ```
 $ make composer c="update"
 $ make composer c="dump-autoload"
 ```
+## Thanks 
+to [skodnik](https://github.com/skodnik) for the initial version [yandex.taxi-pub](https://github.com/skodnik/yandex.taxi-pub)
