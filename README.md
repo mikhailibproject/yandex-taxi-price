@@ -59,6 +59,7 @@ To get it, you need to enable the Google Sheets API and create an application.
 More details here - [developers.google.com/sheets/api/quickstart/ ](https://developers.google.com/sheets/api/quickstart/php#step_3_set_up_the_sample)
 
 Yandex Taxi API Key and ID you can get in the service [Yandex Taxi API](https://yandex.ru/dev/taxi/taxiapi/)
+
 Yandex Weather API Key for testing purposes [Yandex Developer](https://developer.tech.yandex.ru/services/)
 
 
