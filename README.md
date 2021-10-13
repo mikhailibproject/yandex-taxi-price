@@ -6,12 +6,10 @@ Docker install: [get-docker](https://docs.docker.com/get-docker/)
 $ git clone https://github.com/skodnik/yandex.taxi-pub
 $ cd yandex.taxi-pub
 $ make start
-
 ```
 
 ## Set up parameters app/.env
 > IMPORTANT! exactly "app/.env", not ".env"
-
 ```
 # Yandex.Taxi price service URL
 YANDEX_TAXI_URI_API="https://taxi-routeinfo.taxi.yandex.net/taxi_info"
