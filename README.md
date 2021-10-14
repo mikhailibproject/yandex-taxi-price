@@ -7,7 +7,7 @@ $ git clone https://github.com/mikhailibproject/yandex-taxi-price.git
 $ cd yandex.taxi.price
 $ make start
 or  
-$ docker composer up 
+$ docker compose up 
 ```
 
 ## Set up parameters app/.env
