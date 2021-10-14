@@ -1,0 +1,10 @@
+*.log
+.phpunit*
+composer.lock
+/.idea
+/app/.env
+/app/vendor
+/app/storage/logs
+/app/storage/google-docs
+/app/storage/db
+/app/storage/report

@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+use App\Command\YandexTaxiInit;
+use App\Command\YandexTaxiList;
+use App\Command\YandexTaxiReport;
+use Dotenv\Dotenv;
+use Symfony\Component\Console\Application;
+
+require __DIR__ . '/vendor/autoload.php';
+
+(Dotenv::createImmutable(__DIR__))->load();
+
+date_default_timezone_set('Europe/Moscow');
+
+$application = new Application();
+
+$application->add(new YandexTaxiList());
+$application->add(new YandexTaxiInit());
+$application->add(new YandexTaxiReport());
+
+$application->run();
