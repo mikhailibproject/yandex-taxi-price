@@ -88,7 +88,6 @@ class TaxiRouteList
             $this->read_header = $values[0];
             unset($values[0]);
             foreach ($values as $row)
-            {
                 $this->addRoute(new TaxiRoute(
                     $row[array_search('name',$this->read_header)],
                     $row[array_search('description',$this->read_header)],
@@ -99,7 +98,6 @@ class TaxiRouteList
                     $row[array_search('id',$this->read_header)],
                     (int) $row[array_search('request_count',$this->read_header)]
                 ));
-            }
 
         } else {
 
