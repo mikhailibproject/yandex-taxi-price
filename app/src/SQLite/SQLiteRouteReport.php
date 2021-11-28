@@ -99,10 +99,13 @@ class SQLiteRouteReport
             INNER JOIN req_price rp on p.req_id = rp.id
             INNER JOIN weather w on w.id = rp.weather_id
             INNER JOIN routes r on rp.route_id = r.id
-            WHERE p.class_name = $class_name AND
-                  datetime(rp.datetime, 'localtime') >= $date_begin . ' ' . $time_begin AND 
-                  datetime(rp.datetime, 'localtime') <= $date_end . ' ' . $time_end;"
+            WHERE p.class_name = :class_name AND
+                  datetime(rp.datetime, 'localtime') >= :datetime_begin AND 
+                  datetime(rp.datetime, 'localtime') <= :datetime_end;"
         );
+        $this->stmt->bindValue(':class_name', $class_name);
+        $this->stmt->bindValue(':datetime_begin', $date_begin . ' ' . $time_begin);
+        $this->stmt->bindValue(':datetime_end', $date_end . ' ' . $time_end);
         //$stmt->bindValue(':route_id', $route_id);
         return $this->stmt->execute();
 

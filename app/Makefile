@@ -14,3 +14,6 @@ init-sql: ## Создать базу двнных и очистить табли
 
 report: ## Выгружает данные запросов из БД SQLite в CSV файл
 	php cli yandextaxi:report -o "./storage/report/taxi_price${CURRENT_DT}.csv"
+
+reportai: ## Выгружает данные для обучения ти контроля AI из БД SQLite в CSV файл
+	php cli yandextaxi:reportai -o "./storage/report" -b "2021-10-25" -e "2021-11-17" -c "2021-11-18" -t "2021-11-24"
