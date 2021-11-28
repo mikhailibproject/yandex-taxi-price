@@ -20,12 +20,16 @@ class TaxiRoute
     private $price_data = [];
     private $request_count = 0;
     private $error_message = '';
+
     /**
      * @param string $name Name
      * @param string $desc Description
      * @param array|string[] $from from Array [long,lat]
-     * @param array|string[] $to   to Array [long,lat]
-     * @param string $id  record id
+     * @param array|string[] $to to Array [long,lat]
+     * @param string $id record id
+     * @param int $request_count
+     * @param array $class_list
+     * @param array $option_list
      */
     public function __construct(string $name, string $desc = '',
                                 array  $from = ['long' => '', 'lat' => ''],
