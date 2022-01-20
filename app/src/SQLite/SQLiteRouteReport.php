@@ -157,6 +157,9 @@ class SQLiteRouteReport
             r.name AS name,
             date(rp.datetime, 'localtime') AS price_date,
             stdev(price) as price_stdev,     
+            min(price) as price_min,
+            max(price) as price_max,
+            avg(price) as price_avg,
             class_name
             FROM
             prices p
@@ -187,7 +190,10 @@ class SQLiteRouteReport
             r.route_id as id,
             r.name AS name,
             strftime('%W', rp.datetime, 'localtime' ) as price_weeknumber,
-            stdev(price) as price_stdev,     
+            stdev(price) as price_stdev,
+            min(price) as price_min,
+            max(price) as price_max,
+            avg(price) as price_avg,
             class_name
             FROM
             prices p
@@ -218,6 +224,9 @@ class SQLiteRouteReport
             r.route_id as id,
             r.name AS name,
             stdev(price) as price_stdev,     
+            min(price) as price_min,
+            max(price) as price_max,
+            avg(price) as price_avg,
             class_name
             FROM
             prices p
