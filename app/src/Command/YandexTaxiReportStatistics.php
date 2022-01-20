@@ -130,7 +130,7 @@ class YandexTaxiReportStatistics extends Command
         {
             // Learning data report
             $outfile = $output_path . '/'. 'st_'. $statistic_measure .'_'. $statistics_period . '_learn_' . $class_name
-                       . '_' . $date_begin . '_' . $date_end . 'csv';
+                       . '_' . $date_begin . '_' . $date_end . '.csv';
             switch ($statistics_period) {
                 case 'date':
                     $report->getStatisticsStDevDate($class_name, $date_begin, '00:00:00', $date_end, '23:59:59');
@@ -147,7 +147,7 @@ class YandexTaxiReportStatistics extends Command
 
             // Checking data report
             $outfile = $output_path . '/'. 'st_'. $statistic_measure .'_'. $statistics_period . '_check_' . $class_name
-                       . '_' . $date_begin_check . '_' . $date_end_check . 'csv';
+                       . '_' . $date_begin_check . '_' . $date_end_check . '.csv';
             switch ($statistics_period) {
                 case 'date':
                     $report->getStatisticsStDevDate($class_name, $date_begin_check, '00:00:00', $date_end_check, '23:59:59');

@@ -110,12 +110,12 @@ class YandexTaxiReportForAI extends Command
         foreach ( [TaxiClass::Econom, TaxiClass::Comfort, TaxiClass::ComfortPlus] as $class_name )
         {
             // Learning data report
-            $outfile = $output_path . '/'. 'learn_' . $class_name . '_' . $date_begin . '_' . $date_end . 'csv';
+            $outfile = $output_path . '/'. 'learn_' . $class_name . '_' . $date_begin . '_' . $date_end . '.csv';
             $report->getFilteredData($class_name, $date_begin, '00:00:00', $date_end, '23:59:59');
             $io->text("Start writing data to the file:" . $outfile);
             $io->text("Written " . writeReportCSV($outfile, $report) . " line(s)");
             // Checking data report
-            $outfile = $output_path . '/'. 'check_' . $class_name . '_' . $date_begin_check . '_' . $date_end_check . 'csv';
+            $outfile = $output_path . '/'. 'check_' . $class_name . '_' . $date_begin_check . '_' . $date_end_check . '.csv';
             $report->getFilteredData($class_name, $date_begin_check, '00:00:00', $date_end_check, '23:59:59');
             $io->text("Start writing data to the file:" . $outfile);
             $io->text("Written " . writeReportCSV($outfile, $report) . " line(s)");
