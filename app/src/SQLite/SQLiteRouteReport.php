@@ -160,6 +160,7 @@ class SQLiteRouteReport
             min(price) as price_min,
             max(price) as price_max,
             avg(price) as price_avg,
+            stdev(price) / avg(price) * 100.00 as price_cv,
             class_name
             FROM
             prices p
@@ -194,6 +195,7 @@ class SQLiteRouteReport
             min(price) as price_min,
             max(price) as price_max,
             avg(price) as price_avg,
+            stdev(price) / avg(price) * 100.00 as price_cv,
             class_name
             FROM
             prices p
@@ -227,6 +229,7 @@ class SQLiteRouteReport
             min(price) as price_min,
             max(price) as price_max,
             avg(price) as price_avg,
+            stdev(price) / avg(price) * 100.00 as price_cv,
             class_name
             FROM
             prices p
