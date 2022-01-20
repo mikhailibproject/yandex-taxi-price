@@ -17,3 +17,15 @@ report: ## Выгружает данные запросов из БД SQLite в 
 
 reportai: ## Выгружает данные для обучения ти контроля AI из БД SQLite в CSV файл
 	php cli yandextaxi:reportai -o "./storage/report" -b "2021-10-25" -e "2021-11-17" -c "2021-11-18" -t "2021-11-24"
+
+stdevdate: ##  БД SQLite в CSV файл
+	php cli yandextaxi:statistics -o "./storage/report" -b "2021-10-25" -e "2021-11-17" -c "2021-11-18" -t "2021-11-24" -m "stdev" -p "date"
+
+stdevweek: ##  БД SQLite в CSV файл
+	php cli yandextaxi:statistics -o "./storage/report" -b "2021-10-25" -e "2021-11-17" -c "2021-11-18" -t "2021-11-24" -m "stdev" -p "week"
+
+stdevmonth: ##  БД SQLite в CSV файл
+	php cli yandextaxi:statistics -o "./storage/report" -b "2021-10-25" -e "2021-11-17" -c "2021-11-18" -t "2021-11-24" -m "stdev" -p "month"
+
+stdevall: ##  БД SQLite в CSV файл
+	php cli yandextaxi:statistics -o "./storage/report" -b "2021-10-25" -e "2021-11-17" -c "2021-11-18" -t "2021-11-24" -m "stdev" -p "all"

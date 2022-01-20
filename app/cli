@@ -5,6 +5,7 @@ use App\Command\YandexTaxiInit;
 use App\Command\YandexTaxiList;
 use App\Command\YandexTaxiReport;
 use App\Command\YandexTaxiReportForAI;
+use App\Command\YandexTaxiReportStatistics;
 use Dotenv\Dotenv;
 use Symfony\Component\Console\Application;
 
@@ -20,5 +21,9 @@ $application->add(new YandexTaxiList());
 $application->add(new YandexTaxiInit());
 $application->add(new YandexTaxiReport());
 $application->add(new YandexTaxiReportForAI());
+$application->add(new YandexTaxiReportStatistics());
 
-$application->run();
+try {
+    $application->run();
+} catch (Exception $e) {
+}
